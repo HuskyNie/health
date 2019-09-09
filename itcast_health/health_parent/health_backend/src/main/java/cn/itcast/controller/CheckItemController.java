@@ -1,6 +1,8 @@
 package cn.itcast.controller;
 
 import cn.itcast.constant.MessageConstant;
+import cn.itcast.entity.PageResult;
+import cn.itcast.entity.QueryPageBean;
 import cn.itcast.entity.Result;
 import cn.itcast.pojo.CheckItem;
 import cn.itcast.service.CheckItemService;
@@ -25,5 +27,14 @@ public class CheckItemController {
             e.printStackTrace();
             return new Result(false , MessageConstant.ADD_CHECKITEM_FAIL);
         }
+    }
+
+    @RequestMapping("/findPage")
+    public PageResult findPage(@RequestBody QueryPageBean queryPageBean){
+        return checkItemService.findPage(
+                queryPageBean.getCurrentPage(),
+                queryPageBean.getPageSize(),
+                queryPageBean.getQueryString()
+        );
     }
 }
