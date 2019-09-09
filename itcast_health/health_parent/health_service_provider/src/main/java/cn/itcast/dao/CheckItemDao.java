@@ -2,6 +2,7 @@ package cn.itcast.dao;
 
 import cn.itcast.pojo.CheckItem;
 import com.github.pagehelper.Page;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -13,4 +14,10 @@ public interface CheckItemDao {
 
 
     Page<CheckItem> selectByCondition(String queryString);
+
+    @Select("select count(*) from t_checkgroup_checkitem where checkitem_id = #{id}")
+    long findCountByCheckItemId(Integer id);
+
+    @Delete("delete from t_checkitem where id = #{id}")
+    void deleteById(Integer id);
 }

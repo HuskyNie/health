@@ -7,4 +7,6 @@ public interface CheckItemService {
     void add(CheckItem checkItem);
 
     PageResult findPage(Integer currentPage, Integer pageSize, String queryString);
+
+    void delete(Integer id);
 }

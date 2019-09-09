@@ -22,11 +22,11 @@ public class CheckItemController {
     public Result add(@RequestBody CheckItem checkItem){
         try {
             checkItemService.add(checkItem);
-            return new Result(true , MessageConstant.ADD_CHECKITEM_SUCCESS);
         } catch (Exception e){
             e.printStackTrace();
             return new Result(false , MessageConstant.ADD_CHECKITEM_FAIL);
         }
+        return new Result(true , MessageConstant.ADD_CHECKITEM_SUCCESS);
     }
 
     @RequestMapping("/findPage")
@@ -36,5 +36,19 @@ public class CheckItemController {
                 queryPageBean.getPageSize(),
                 queryPageBean.getQueryString()
         );
+    }
+
+    @RequestMapping("/delete")
+    public Result delete(Integer id){
+        try {
+            checkItemService.delete(id);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            return new Result(false , e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false , MessageConstant.DELETE_CHECKITEM_FAIL);
+        }
+        return new Result(true , MessageConstant.DELETE_CHECKITEM_SUCCESS);
     }
 }
