@@ -232,6 +232,32 @@
                 },
                 //添加
                 handleAdd() {
+                    //表单校验
+                    this.$refs['dataAddForm'].validate((valid)=>{
+                        if (valid){
+                            //表单合法,发送ajax请求
+                            axios.post("/checkItem/add.do" , this.formData).then((response)=>{
+                                //隐藏新建窗口
+                                this.dialogFormVisible=false;
+                                //判断后台传回数据
+                                if (response.data.flag){
+                                    //弹出提示
+                                    this.$message({
+                                        message:response.data.message,
+                                        type:'success'
+                                    });
+                                } else {
+                                    this.$message.error(response.data.message);
+                                }
+                            }).finally(()=>{
+                                //刷新数据
+                                this.findPage();
+                            })
+                        } else {
+                            this.$message.error("表单校验失败");
+                            return false;
+                        }
+                    });
                 },
                 //分页查询
                 findPage() {
