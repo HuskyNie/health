@@ -2,10 +2,7 @@ package cn.itcast.dao;
 
 import cn.itcast.pojo.CheckGroup;
 import com.github.pagehelper.Page;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.SelectKey;
+import org.apache.ibatis.annotations.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -23,4 +20,19 @@ public interface CheckGroupDao {
 
     //分页查询方法
     Page<CheckGroup> selectByCondition(String queryString);
+
+    //编辑页面数据回显方法
+    @Select("select * from t_checkgroup where id = #{id}")
+    CheckGroup findById(Integer id);
+
+    //编辑页面检查项关联关系回显方法
+    @Select("select checkitem_id from t_checkgroup_checkitem where checkgroup_id = #{id}")
+    List<Integer> findCheckItemIdsByCheckGroupId(Integer id);
+
+    //更新检查组基本信息
+    void updateCheckGroup(CheckGroup checkGroup);
+
+    //清空当前检查组的关联关系
+    @Delete("delete from t_checkgroup_checkitem where checkgroup_id = #{id}")
+    void deleteAssociation(Integer id);
 }
