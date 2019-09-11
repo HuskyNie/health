@@ -205,7 +205,7 @@
     <script type="text/javascript" src="../js/jquery.min.js"></script>
     <script src="../js/axios-0.18.0.js"></script>
     <script>
-        var vue = new Vue({
+        const vue = new Vue({
             el: '#app',
             data: {
                 pagination: {//分页相关模型数据
@@ -233,15 +233,15 @@
                 handleEdit() {
                     //表单校验
                     this.$refs['dataEditForm'].validate((valid) => {
-                        if (valid){
+                        if (valid) {
                             //表单校验通过,发送请求
-                            axios.post("/checkItem/edit.do" , this.formData).then((response) => {
-                                if (response.data.flag){
+                            axios.post("/checkItem/edit.do", this.formData).then((response) => {
+                                if (response.data.flag) {
                                     //修改成功,隐藏页面,弹出提示
-                                    this.dialogFormVisible4Edit=false;
+                                    this.dialogFormVisible4Edit = false;
                                     this.$message({
-                                        message:response.data.message,
-                                        type:'success'
+                                        message: response.data.message,
+                                        type: 'success'
                                     });
                                 } else {
                                     //修改失败,弹出提示
@@ -261,24 +261,24 @@
                 //添加
                 handleAdd() {
                     //表单校验
-                    this.$refs['dataAddForm'].validate((valid)=>{
-                        if (valid){
+                    this.$refs['dataAddForm'].validate((valid) => {
+                        if (valid) {
                             //表单合法,发送ajax请求
-                            axios.post("/checkItem/add.do" , this.formData).then((response)=>{
+                            axios.post("/checkItem/add.do", this.formData).then((response) => {
                                 //判断后台传回数据
-                                if (response.data.flag){
+                                if (response.data.flag) {
                                     //弹出插入成功提示
                                     this.$message({
-                                        message:response.data.message,
-                                        type:'success'
+                                        message: response.data.message,
+                                        type: 'success'
                                     });
                                     //隐藏新建窗口
-                                    this.dialogFormVisible=false;
+                                    this.dialogFormVisible = false;
                                 } else {
                                     //弹出插入失败提示
                                     this.$message.error(response.data.message);
                                 }
-                            }).finally(()=>{
+                            }).finally(() => {
                                 //刷新页面数据
                                 this.findPage();
                             })
@@ -290,7 +290,7 @@
                     });
                 },
                 //分页查询
-                findPage(){
+                findPage() {
                     //分页参数
                     const param = {
                         currentPage: this.pagination.currentPage,//当前页码
@@ -298,17 +298,23 @@
                         queryString: this.pagination.queryString//查询条件
                     };
                     //发送ajax后台请求
-                    axios.post("/checkItem/findPage.do" , param).then((response) => {
-                        //模型数据赋值,双向绑定展示页面
-                        this.dataList = response.data.rows;
-                        this.pagination.total = response.data.total;
+                    axios.post("/checkItem/findPage.do", param).then((response) => {
+                        //判断获取到的数据条数是否为0,如果是且当前页数大于1,跳转到上一页
+                        if (response.data.rows.length===0 && this.pagination.currentPage>1){
+                            this.pagination.currentPage -= 1;
+                            this.findPage();
+                        } else {
+                            //模型数据赋值,双向绑定展示页面
+                            this.dataList = response.data.rows;
+                            this.pagination.total = response.data.total;
+                        }
                     })
                 },
                 //按条件分页查询
-                findPageByCondition(){
-                    this.pagination.currentPage=1;
+                findPageByCondition() {
+                    this.pagination.currentPage = 1;
                     this.findPage();
-                }
+                },
                 // 重置表单
                 resetForm() {
                 },
@@ -323,7 +329,7 @@
                     axios.get("/checkItem/findById.do?id=" + row.id).then((response) => {
                         if (response.data.flag) {
                             //向模型数据赋值
-                            this.formData=response.data.data;
+                            this.formData = response.data.data;
                             //显示编辑窗口
                             this.dialogFormVisible4Edit = true;
                         } else {
@@ -333,21 +339,21 @@
                 },
                 //切换页码
                 handleCurrentChange(currentPage) {
-                    this.pagination.currentPage=currentPage;
+                    this.pagination.currentPage = currentPage;
                     this.findPage();
                 },
                 // 删除
                 handleDelete(row) {
                     //弹框提醒用户是否确认删除
-                    this.$confirm("确认删除当前选中记录吗?" , "提示" , {type:'warning'}).then(()=>{
+                    this.$confirm("确认删除当前选中记录吗?", "提示", {type: 'warning'}).then(() => {
                         //确认删除,向后台发送ajax请求
-                        axios.get("/checkItem/delete.do?id=" + row.id).then((response)=>{
+                        axios.get("/checkItem/delete.do?id=" + row.id).then((response) => {
                             //判断是否删除成功
-                            if (response.data.flag){
+                            if (response.data.flag) {
                                 //删除成功
                                 this.$message({
-                                    message:response.data.message,
-                                    type:'success'
+                                    message: response.data.message,
+                                    type: 'success'
                                 });
                                 //刷新页面数据
                                 this.findPage();
