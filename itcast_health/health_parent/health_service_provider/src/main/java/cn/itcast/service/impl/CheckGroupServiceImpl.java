@@ -1,9 +1,12 @@
 package cn.itcast.service.impl;
 
 import cn.itcast.dao.CheckGroupDao;
+import cn.itcast.entity.PageResult;
 import cn.itcast.pojo.CheckGroup;
 import cn.itcast.service.CheckGroupService;
 import com.alibaba.dubbo.config.annotation.Service;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,5 +31,12 @@ public class CheckGroupServiceImpl implements CheckGroupService {
                 checkGroupDao.setCheckGroupAssociationWithCheckItem(map);
             }
         }
+    }
+
+    //分页查询
+    public PageResult findPage(Integer currentPage, Integer pageSize, String queryString) {
+        PageHelper.startPage(currentPage , pageSize);
+        Page<CheckGroup> page = checkGroupDao.selectByCondition(queryString);
+        return new PageResult(page.getTotal() , page.getResult());
     }
 }

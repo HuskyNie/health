@@ -9,4 +9,10 @@
         insert into t_checkgroup (code,name,sex,helpCode,remark,attention) values
         (#{code},#{name},#{sex},#{helpCode},#{remark},#{attention})
     </insert>-->
+    <select id="selectByCondition" parameterType="string" resultType="cn.itcast.pojo.CheckGroup">
+        select * from t_checkgroup
+        <if test="value != null and value.length >0">
+            where code = #{value} or name = #{value} or helpCode = #{value}
+        </if>
+    </select>
 </mapper>

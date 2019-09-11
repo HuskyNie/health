@@ -2,6 +2,8 @@ package cn.itcast.controller;
 
 
 import cn.itcast.constant.MessageConstant;
+import cn.itcast.entity.PageResult;
+import cn.itcast.entity.QueryPageBean;
 import cn.itcast.entity.Result;
 import cn.itcast.pojo.CheckGroup;
 import cn.itcast.service.CheckGroupService;
@@ -26,5 +28,15 @@ public class CheckGroupController {
             return new Result(false , MessageConstant.ADD_CHECKGROUP_FAIL);
         }
         return new Result(true , MessageConstant.ADD_CHECKGROUP_SUCCESS);
+    }
+
+    @RequestMapping("/findPage")
+    public PageResult findPage(@RequestBody QueryPageBean queryPageBean){
+            PageResult pageResult = checkGroupService.findPage(
+                    queryPageBean.getCurrentPage(),
+                    queryPageBean.getPageSize(),
+                    queryPageBean.getQueryString()
+            );
+            return pageResult;
     }
 }
