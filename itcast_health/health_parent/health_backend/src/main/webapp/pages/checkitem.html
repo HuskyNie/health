@@ -27,7 +27,7 @@
                 <div class="box">
                     <div class="filter-container">
                         <el-input placeholder="项目编码/项目名称" v-model="pagination.queryString" style="width: 200px;" class="filter-item"></el-input>
-                        <el-button @click=pagination.currentPage=1;"findPage()" class="dalfBut">查询</el-button>
+                        <el-button @click="findPageByCondition()" class="dalfBut">查询</el-button>
                         <el-button type="primary" class="butT" @click="handleCreate()">新建</el-button>
                     </div>
                     <el-table size="small" current-row-key="id" :data="dataList" stripe highlight-current-row>
@@ -304,6 +304,11 @@
                         this.pagination.total = response.data.total;
                     })
                 },
+                //按条件分页查询
+                findPageByCondition(){
+                    this.pagination.currentPage=1;
+                    this.findPage();
+                }
                 // 重置表单
                 resetForm() {
                 },
