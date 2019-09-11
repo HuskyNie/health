@@ -17,18 +17,22 @@ public class CheckItemServiceImpl implements CheckItemService {
     @Autowired
     private CheckItemDao checkItemDao;
 
+    //新建方法
     public void add(CheckItem checkItem) {
         checkItemDao.add(checkItem);
     }
 
+    //更新方法
     public void edit(CheckItem checkItem) {
         checkItemDao.update(checkItem);
     }
 
+    //数据回显方法
     public CheckItem findById(Integer id) {
         return checkItemDao.findById(id);
     }
 
+    //删除方法
     public void delete(Integer id) {
         //删除检查项之前应该先判断此检查项是否与检查组关联,如果已经关联则不允许删除
         long count = checkItemDao.findCountByCheckItemId(id);
@@ -39,6 +43,7 @@ public class CheckItemServiceImpl implements CheckItemService {
         checkItemDao.deleteById(id);
     }
 
+    //分页查询方法
     public PageResult findPage(Integer currentPage, Integer pageSize, String queryString) {
         PageHelper.startPage(currentPage , pageSize);
         Page<CheckItem> page =  checkItemDao.selectByCondition(queryString);

@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/checkItem")
 public class CheckItemController {
 
+    //通过Dubbo注入Service实现类增强类
     @Reference
     private CheckItemService checkItemService;
 
+    //检查项新增方法
     @RequestMapping("/add")
     public Result add(@RequestBody CheckItem checkItem){
         try {
@@ -29,20 +31,24 @@ public class CheckItemController {
         return new Result(true , MessageConstant.ADD_CHECKITEM_SUCCESS);
     }
 
+    //检查项分页查询方法
     @RequestMapping("/findPage")
     public PageResult findPage(@RequestBody QueryPageBean queryPageBean){
         return checkItemService.findPage(
+                //传入分页查询参数
                 queryPageBean.getCurrentPage(),
                 queryPageBean.getPageSize(),
                 queryPageBean.getQueryString()
         );
     }
 
+    //检查项删除方法
     @RequestMapping("/delete")
     public Result delete(Integer id){
         try {
             checkItemService.delete(id);
         } catch (RuntimeException e) {
+            //当前检查项与检查组有关联,不能删除
             e.printStackTrace();
             return new Result(false , e.getMessage());
         } catch (Exception e) {
@@ -52,10 +58,12 @@ public class CheckItemController {
         return new Result(true , MessageConstant.DELETE_CHECKITEM_SUCCESS);
     }
 
+    //检查项编辑功能数据回显方法
     @RequestMapping("/findById")
     public Result findById(Integer id){
         try {
             CheckItem checkItem = checkItemService.findById(id);
+            //判断查询到的数据是否为空
             if (null != checkItem){
                 return new Result(true , MessageConstant.QUERY_CHECKITEM_SUCCESS , checkItem);
             }else{
@@ -67,6 +75,7 @@ public class CheckItemController {
         }
     }
 
+    //检查项编辑功能更新方法
     @RequestMapping("/edit")
     public Result edit(@RequestBody CheckItem checkItem) {
         try {
