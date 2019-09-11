@@ -3,6 +3,8 @@ package cn.itcast.service;
 import cn.itcast.entity.PageResult;
 import cn.itcast.pojo.CheckItem;
 
+import java.util.List;
+
 public interface CheckItemService {
     void add(CheckItem checkItem);
 
@@ -13,4 +15,6 @@ public interface CheckItemService {
     CheckItem findById(Integer id);
 
     void edit(CheckItem checkItem);
+
+    List<CheckItem> findAll();
 }

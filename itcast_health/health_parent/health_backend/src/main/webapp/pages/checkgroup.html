@@ -285,15 +285,46 @@
                 },
                 //添加
                 handleAdd () {
+                    //发送异步请求添加数据
+                    axios.post("/checkGroup/add.do?checkitemIds=" + this.checkitemIds , this.formData).then((response) => {
+                        if (response.data.flag) {
+                            //添加成功,隐藏页面
+                            this.dialogFormVisible = false;
+                            //弹出添加成功提示
+                            this.$message({
+                                message:response.data.message,
+                                type:'success'
+                            });
+                        } else {
+                            //添加失败,弹出提示
+                            this.$message.error(response.data.message);
+                        }
+                    }).finally(() => {
+                        //刷新页面
+                        this.findPage();
+                    })
                 },
                 //分页查询
                 findPage() {
                 },
                 // 重置表单
                 resetForm() {
+                    this.formData = {};
+                    this.activeName = 'first';
                 },
                 // 弹出添加窗口
                 handleCreate() {
+                    //显示窗口,重置数据
+                    this.dialogFormVisible = true;
+                    this.resetForm();
+                    //发送ajax查询所有检查项数据
+                    axios.get("/checkItem/findAll.do").then((response) => {
+                        if (response.data.flag) {
+                            this.tableData = response.data.data
+                        } else {
+                            this.$message.error(response.data.message)
+                        }
+                    })
                 },
                 // 弹出编辑窗口
                 handleUpdate(row) {

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/checkItem")
 public class CheckItemController {
@@ -85,5 +87,22 @@ public class CheckItemController {
             return new Result(false , MessageConstant.EDIT_CHECKITEM_FAIL);
         }
         return new Result(true , MessageConstant.EDIT_CHECKITEM_SUCCESS);
+    }
+
+    //检查组新建编辑窗口数据回显查询所有方法
+    @RequestMapping("/findAll")
+    public Result findAll(){
+        try {
+            List<CheckItem> checkItemList = checkItemService.findAll();
+            if (null != checkItemList && checkItemList.size() > 0) {
+                return new Result(true , MessageConstant.QUERY_CHECKITEM_SUCCESS , checkItemList);
+            } else {
+                return new Result(false , MessageConstant.QUERY_CHECKITEM_FAIL);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false , MessageConstant.QUERY_CHECKITEM_FAIL);
+        }
+
     }
 }

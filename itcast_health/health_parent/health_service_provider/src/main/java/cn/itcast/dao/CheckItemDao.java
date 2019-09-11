@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 @Mapper
 public interface CheckItemDao {
     //新建方法
@@ -30,4 +32,8 @@ public interface CheckItemDao {
 
     //更新方法
     void update(CheckItem checkItem);
+
+    //查询所有方法
+    @Select("select * from t_checkitem")
+    List<CheckItem> findAll();
 }

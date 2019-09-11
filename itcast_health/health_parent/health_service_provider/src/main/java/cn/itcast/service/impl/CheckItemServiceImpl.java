@@ -10,6 +10,8 @@ import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service(interfaceClass = CheckItemService.class)
 @Transactional
 public class CheckItemServiceImpl implements CheckItemService {
@@ -25,6 +27,11 @@ public class CheckItemServiceImpl implements CheckItemService {
     //更新方法
     public void edit(CheckItem checkItem) {
         checkItemDao.update(checkItem);
+    }
+
+    //新增编辑检查组数据回显查询所有方法
+    public List<CheckItem> findAll() {
+        return checkItemDao.findAll();
     }
 
     //数据回显方法

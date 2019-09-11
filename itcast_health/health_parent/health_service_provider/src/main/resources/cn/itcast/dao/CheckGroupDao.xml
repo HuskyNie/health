@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.dao.CheckGroupDao">
+    <!--<insert id="add" parameterType="cn.itcast.pojo.CheckGroup">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            select last_insert_id()
+        </selectKey>
+        insert into t_checkgroup (code,name,sex,helpCode,remark,attention) values
+        (#{code},#{name},#{sex},#{helpCode},#{remark},#{attention})
+    </insert>-->
+</mapper>
