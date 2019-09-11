@@ -12,7 +12,6 @@ public interface CheckItemDao {
     @Insert("insert into t_checkitem values(#{id} , #{code} , #{name} , #{sex} , #{age} , #{price} , #{type} , #{attention} , #{remark})")
     void add(CheckItem checkItem);
 
-
     Page<CheckItem> selectByCondition(String queryString);
 
     @Select("select count(*) from t_checkgroup_checkitem where checkitem_id = #{id}")
@@ -20,4 +19,9 @@ public interface CheckItemDao {
 
     @Delete("delete from t_checkitem where id = #{id}")
     void deleteById(Integer id);
+
+    @Select("select * from t_checkitem where id = #{id}")
+    CheckItem findById(Integer id);
+
+    void update(CheckItem checkItem);
 }

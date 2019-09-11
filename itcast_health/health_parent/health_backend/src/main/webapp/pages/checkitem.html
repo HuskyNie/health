@@ -27,7 +27,7 @@
                 <div class="box">
                     <div class="filter-container">
                         <el-input placeholder="项目编码/项目名称" v-model="pagination.queryString" style="width: 200px;" class="filter-item"></el-input>
-                        <el-button @click="beforeFindPage()" class="dalfBut">查询</el-button>
+                        <el-button @click=pagination.currentPage=1;"findPage()" class="dalfBut">查询</el-button>
                         <el-button type="primary" class="butT" @click="handleCreate()">新建</el-button>
                     </div>
                     <el-table size="small" current-row-key="id" :data="dataList" stripe highlight-current-row>
@@ -205,7 +205,7 @@
     <script type="text/javascript" src="../js/jquery.min.js"></script>
     <script src="../js/axios-0.18.0.js"></script>
     <script>
-        const vue = new Vue({
+        var vue = new Vue({
             el: '#app',
             data: {
                 pagination: {//分页相关模型数据
@@ -226,11 +226,37 @@
             //钩子函数，VUE对象初始化完成后自动执行
             created() {
                 //调用方法刷新页面数据
-                this.beforeFindPage();
+                this.findPage();
             },
             methods: {
                 //编辑
                 handleEdit() {
+                    //表单校验
+                    this.$refs['dataEditForm'].validate((valid) => {
+                        if (valid){
+                            //表单校验通过,发送请求
+                            axios.post("/checkItem/edit.do" , this.formData).then((response) => {
+                                if (response.data.flag){
+                                    //修改成功,隐藏页面,弹出提示
+                                    this.dialogFormVisible4Edit=false;
+                                    this.$message({
+                                        message:response.data.message,
+                                        type:'success'
+                                    });
+                                } else {
+                                    //修改失败,弹出提示
+                                    this.$message.error(response.data.message);
+                                }
+                            }).finally(() => {
+                                //重新发送请求刷新页面数据
+                                this.findPage();
+                            })
+                        } else {
+                            //表单校验失败
+                            this.$message.error("表单数据校验失败");
+                            return false;
+                        }
+                    })
                 },
                 //添加
                 handleAdd() {
@@ -254,7 +280,7 @@
                                 }
                             }).finally(()=>{
                                 //刷新页面数据
-                                this.beforeFindPage();
+                                this.findPage();
                             })
                         } else {
                             //表单校验失败提示
@@ -263,18 +289,14 @@
                         }
                     });
                 },
-                //优化检查项按条件分页查询
-                beforeFindPage() {
+                //分页查询
+                findPage(){
                     //分页参数
                     const param = {
-                        currentPage: 1,//当前页码
+                        currentPage: this.pagination.currentPage,//当前页码
                         pageSize: this.pagination.pageSize,//每页显示的记录数
                         queryString: this.pagination.queryString//查询条件
                     };
-                    this.findPage(param);
-                },
-                //分页查询
-                findPage(param){
                     //发送ajax后台请求
                     axios.post("/checkItem/findPage.do" , param).then((response) => {
                         //模型数据赋值,双向绑定展示页面
@@ -292,15 +314,22 @@
                 },
                 // 弹出编辑窗口
                 handleUpdate(row) {
+                    //发送ajax获取回显数据
+                    axios.get("/checkItem/findById.do?id=" + row.id).then((response) => {
+                        if (response.data.flag) {
+                            //向模型数据赋值
+                            this.formData=response.data.data;
+                            //显示编辑窗口
+                            this.dialogFormVisible4Edit = true;
+                        } else {
+                            this.$message.error("获取数据失败,请刷新页面");
+                        }
+                    });
                 },
                 //切换页码
                 handleCurrentChange(currentPage) {
-                    const param = {
-                        currentPage:currentPage,//当前页码
-                        pageSize: this.pagination.pageSize,//每页显示的记录数
-                        queryString: this.pagination.queryString//查询条件
-                    };
-                    this.findPage(param);
+                    this.pagination.currentPage=currentPage;
+                    this.findPage();
                 },
                 // 删除
                 handleDelete(row) {
@@ -316,8 +345,7 @@
                                     type:'success'
                                 });
                                 //刷新页面数据
-                                //this.@emit("current-change")
-                                this.beforeFindPage()
+                                this.findPage();
                             } else {
                                 //删除失败
                                 this.$message.error(response.data.message)

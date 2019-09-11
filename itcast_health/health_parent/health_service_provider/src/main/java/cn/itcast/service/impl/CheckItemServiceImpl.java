@@ -21,6 +21,14 @@ public class CheckItemServiceImpl implements CheckItemService {
         checkItemDao.add(checkItem);
     }
 
+    public void edit(CheckItem checkItem) {
+        checkItemDao.update(checkItem);
+    }
+
+    public CheckItem findById(Integer id) {
+        return checkItemDao.findById(id);
+    }
+
     public void delete(Integer id) {
         //删除检查项之前应该先判断此检查项是否与检查组关联,如果已经关联则不允许删除
         long count = checkItemDao.findCountByCheckItemId(id);
