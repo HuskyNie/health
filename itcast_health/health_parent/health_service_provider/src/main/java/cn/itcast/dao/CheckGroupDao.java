@@ -35,4 +35,8 @@ public interface CheckGroupDao {
     //清空当前检查组的关联关系
     @Delete("delete from t_checkgroup_checkitem where checkgroup_id = #{id}")
     void deleteAssociation(Integer id);
+
+    //删除检查组基本信息
+    @Delete("delete from t_checkgroup where id = #{id}")
+    void deleteById(Integer id);
 }
