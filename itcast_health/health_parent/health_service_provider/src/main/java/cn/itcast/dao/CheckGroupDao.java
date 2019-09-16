@@ -39,4 +39,8 @@ public interface CheckGroupDao {
     //删除检查组基本信息
     @Delete("delete from t_checkgroup where id = #{id}")
     void deleteById(Integer id);
+
+    //套餐查询所有方法
+    @Select("select * from t_checkgroup")
+    List<CheckGroup> findAll();
 }

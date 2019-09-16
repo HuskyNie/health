@@ -70,6 +70,11 @@ public class CheckGroupServiceImpl implements CheckGroupService {
         }
     }
 
+    //套餐查询所有方法
+    public List<CheckGroup> findAll() {
+        return checkGroupDao.findAll();
+    }
+
     //删除方法
     public void deleteById(Integer id) {
         //清除中间表关联关系
