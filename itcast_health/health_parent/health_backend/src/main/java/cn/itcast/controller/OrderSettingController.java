@@ -6,6 +6,7 @@ import cn.itcast.pojo.OrderSetting;
 import cn.itcast.service.OrderSettingService;
 import cn.itcast.utils.POIUtils;
 import com.alibaba.dubbo.config.annotation.Reference;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,6 +45,7 @@ public class OrderSettingController {
         return new Result(true , MessageConstant.IMPORT_ORDERSETTING_SUCCESS);
     }
 
+    //获取当前月预约信息
     @RequestMapping("/getOrderSettingByMonth")
     public Result getOrderSettingByMonth(String date) {
         try {
@@ -52,6 +54,18 @@ public class OrderSettingController {
         }catch (Exception e) {
             e.printStackTrace();
             return new Result(false , MessageConstant.GET_ORDERSETTING_FAIL);
+        }
+    }
+
+    //根据日期修改可预约人数
+    @RequestMapping("/editNumberByDate")
+    public Result editNumberByDate(@RequestBody OrderSetting orderSetting) {
+        try {
+            orderSettingService.editNumberByDate(orderSetting);
+            return new Result(true , MessageConstant.ORDERSETTING_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false , MessageConstant.ORDERSETTING_FAIL);
         }
     }
 }

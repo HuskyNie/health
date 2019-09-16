@@ -36,6 +36,19 @@ public class OrderSettingServiceImpl implements OrderSettingService {
         }
     }
 
+    //根据日期修改可预约人数
+    public void editNumberByDate(OrderSetting orderSetting) {
+        //查询当前日期是否已设置预约人数
+        long count = orderSettingDao.findCountByOrderDate(orderSetting.getOrderDate());
+        if (count > 0) {
+            //已设置预约人数,更新设置
+            orderSettingDao.editNumberByOrderDate(orderSetting);
+        } else {
+            //未设置预约人数,添加设置
+            orderSettingDao.add(orderSetting);
+        }
+    }
+
     //根据月份获取预约信息
     public List<Map> getOrderSettingByMonth(String date) {
         //拼接调用Dao的Map数据
