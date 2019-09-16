@@ -279,6 +279,24 @@
                 },
                 //添加
                 handleAdd () {
+                    //发送ajax添加套餐数据
+                    axios.post("/setMeal/add.do?checkGroupIds=" + this.checkgroupIds , this.formData).then((response) =>{
+                        //判断是否添加成功
+                        if (response.data.flag) {
+                            //成功,隐藏页面,弹出提示
+                            this.dialogFormVisible = false;
+                            this.$message({
+                                message:response.data.message,
+                                type:'success'
+                            });
+                        } else {
+                            //失败,弹出提示
+                            this.$message.error(response.data.message);
+                        }
+                    }).finally(() => {
+                        //刷新页面
+                        this.findPage();
+                    });
                 },
                 //分页查询
                 findPage() {
