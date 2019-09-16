@@ -1,6 +1,7 @@
 package cn.itcast.dao;
 
 import cn.itcast.pojo.Setmeal;
+import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.SelectKey;
@@ -17,4 +18,7 @@ public interface SetMealDao {
     //设置套餐与检查组关联关系
     @Insert("insert into t_setmeal_checkgroup (setmeal_id,checkgroup_id) values (#{setmeal_id},#{checkgroup_id})")
     void setSetMeanAndCheckGroup(HashMap<String, Integer> map);
+
+    //设置分页查询方法
+    Page<Setmeal> selectByCondition(String queryString);
 }

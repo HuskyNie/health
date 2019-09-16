@@ -1,9 +1,12 @@
 package cn.itcast.service.impl;
 
 import cn.itcast.dao.SetMealDao;
+import cn.itcast.entity.PageResult;
 import cn.itcast.pojo.Setmeal;
 import cn.itcast.service.SetMealService;
 import com.alibaba.dubbo.config.annotation.Service;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,8 +19,14 @@ public class SetMealServiceImpl implements SetMealService {
     @Autowired
     private SetMealDao setMealDao;
 
+    //分页查询方法
+    public PageResult findPage(Integer currentPage, Integer pageSize, String queryString) {
+        PageHelper.startPage(currentPage , pageSize);
+        Page<Setmeal> page = setMealDao.selectByCondition(queryString);
+        return new PageResult(page.getTotal() , page.getResult());
+    }
+
     //新增方法
-    @Override
     public void add(Setmeal setmeal, Integer[] checkGroupIds) {
         //添加套餐基本信息
         setMealDao.add(setmeal);

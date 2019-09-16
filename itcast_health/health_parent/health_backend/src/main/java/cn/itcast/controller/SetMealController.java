@@ -1,6 +1,8 @@
 package cn.itcast.controller;
 
 import cn.itcast.constant.MessageConstant;
+import cn.itcast.entity.PageResult;
+import cn.itcast.entity.QueryPageBean;
 import cn.itcast.entity.Result;
 import cn.itcast.pojo.Setmeal;
 import cn.itcast.service.SetMealService;
@@ -54,5 +56,15 @@ public class SetMealController {
             e.printStackTrace();
             return new Result(false , MessageConstant.ADD_SETMEAL_FAIL);
         }
+    }
+
+    //分页查询方法
+    @RequestMapping("/findPage")
+    public PageResult findPage(@RequestBody QueryPageBean queryPageBean) {
+        return setMealService.findPage(
+                queryPageBean.getCurrentPage(),
+                queryPageBean.getPageSize(),
+                queryPageBean.getQueryString()
+        );
     }
 }
