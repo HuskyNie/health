@@ -7,6 +7,9 @@ import com.alibaba.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service(interfaceClass = MemberService.class)
 @Transactional
 public class MemberServiceImpl implements MemberService {
@@ -22,5 +25,16 @@ public class MemberServiceImpl implements MemberService {
     //新建用户
     public void add(Member member) {
         memberDao.add(member);
+    }
+
+    //根据月份查询已注册会员数
+    public List<Integer> findMemberCountByMonth(List<String> months) {
+        List<Integer> memberCount = new ArrayList<>();
+        for (String month : months) {
+            month = month + ".31";
+            Integer count = memberDao.findMemberCountBeforeDate(month);
+            memberCount.add(count);
+        }
+        return memberCount;
     }
 }
