@@ -36,4 +36,8 @@ public interface CheckItemDao {
     //查询所有方法
     @Select("select * from t_checkitem")
     List<CheckItem> findAll();
+
+    //移动端根据id查询方法
+    @Select("select * from t_checkitem where id in (select checkitem_id from t_checkgroup_checkitem where checkgroup_id=#{id})")
+    List<CheckItem> findCheckItemById(Integer id);
 }

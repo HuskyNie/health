@@ -43,4 +43,23 @@ public interface CheckGroupDao {
     //套餐查询所有方法
     @Select("select * from t_checkgroup")
     List<CheckGroup> findAll();
+
+    //移动端根据id查询方法
+    @Select("select * from t_checkgroup where id in (select checkgroup_id from t_setmeal_checkgroup where setmeal_id=#{id})")
+    @Results({
+            @Result(id = true , column = "id" , property = "id"),
+            @Result(column = "name" , property = "name"),
+            @Result(column = "code" , property = "code"),
+            @Result(column = "helpCode" , property = "helpCode"),
+            @Result(column = "sex" , property = "sex"),
+            @Result(column = "remark" , property = "remark"),
+            @Result(column = "attention" , property = "attention"),
+            @Result(
+                    property = "checkItems",
+                    javaType = List.class,
+                    column = "id",
+                    many = @Many(select = "cn.itcast.dao.CheckItemDao.findCheckItemById")
+            )
+    })
+    List<CheckGroup> findCheckGroupById(Integer id);
 }

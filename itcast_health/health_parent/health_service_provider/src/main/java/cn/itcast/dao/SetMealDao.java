@@ -2,11 +2,11 @@ package cn.itcast.dao;
 
 import cn.itcast.pojo.Setmeal;
 import com.github.pagehelper.Page;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.SelectKey;
+import org.apache.ibatis.annotations.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @Mapper
 public interface SetMealDao {
@@ -21,4 +21,30 @@ public interface SetMealDao {
 
     //设置分页查询方法
     Page<Setmeal> selectByCondition(String queryString);
+
+    //移动端查询所有方法
+    @Select("select * from t_setmeal")
+    List<Setmeal> findAll();
+
+    //移动端根据id查询套餐所有信息方法
+    @Select("select * from t_setmeal where id = #{id}")
+    @Results({
+            @Result(id = true , column = "id" , property = "id"),
+            @Result(column = "name" , property = "name"),
+            @Result(column = "code" , property = "code"),
+            @Result(column = "helpCode" , property = "helpCode"),
+            @Result(column = "sex" , property = "sex"),
+            @Result(column = "age" , property = "age"),
+            @Result(column = "price" , property = "price"),
+            @Result(column = "remark" , property = "remark"),
+            @Result(column = "attention" , property = "attention"),
+            @Result(column = "img" , property = "img"),
+            @Result(
+                    property = "checkGroups",
+                    javaType = List.class,
+                    column = "id",
+                    many = @Many(select = "cn.itcast.dao.CheckGroupDao.findCheckGroupById")
+            )
+    })
+    Setmeal findById(Integer id);
 }

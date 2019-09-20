@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Service(interfaceClass = SetMealService.class)
 @Transactional
@@ -24,6 +25,16 @@ public class SetMealServiceImpl implements SetMealService {
         PageHelper.startPage(currentPage , pageSize);
         Page<Setmeal> page = setMealDao.selectByCondition(queryString);
         return new PageResult(page.getTotal() , page.getResult());
+    }
+
+    //移动端根据id查询套餐方法
+    public Setmeal findById(Integer id) {
+        return setMealDao.findById(id);
+    }
+
+    //移动端查询所有方法
+    public List<Setmeal> findAll() {
+        return setMealDao.findAll();
     }
 
     //新增方法

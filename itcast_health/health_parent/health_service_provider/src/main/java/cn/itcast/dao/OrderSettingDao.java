@@ -28,4 +28,12 @@ public interface OrderSettingDao {
     //根据月份查询预约信息
     @Select("select * from t_ordersetting where orderDate between #{dateBegin} and #{dateEnd}")
     List<OrderSetting> getOrderSettingByMonth(Map<String, String> map);
+
+    //根据日期查询预约信息
+    @Select("select * from t_ordersetting where orderDate = #{orderDate}")
+    OrderSetting findByOrderDate(Date orderDate);
+
+    //根据日期设置已预约人数
+    @Update("update t_ordersetting set reservations = #{reservations} where orderDate = #{orderDate}")
+    void editReservationsByOrderDate(OrderSetting orderSetting);
 }
