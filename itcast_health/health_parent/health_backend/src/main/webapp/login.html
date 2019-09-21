@@ -8,9 +8,14 @@
         <meta name="description" content="传智健康">
         <meta name="keywords" content="传智健康">
         <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+        <meta http-equiv="Expires" content="0">
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Cache-control" content="no-cache">
+        <meta http-equiv="Cache" content="no-cache">
         <!-- 引入样式 -->
         <link rel="stylesheet" href="plugins/elementui/index.css">
         <link rel="stylesheet" href="css/login.css">
+        <script src="/plugins/getUrlParam.js"></script>
     </head>
     <body class="hold-transition skin-purple sidebar-mini">
         <div id="app">
@@ -43,4 +48,17 @@
     <!-- 引入组件库 -->
     <script src="js/vue.js"></script>
     <script src="plugins/elementui/index.js"></script>
+<script>
+    var login_fail = getUrlParam("login-fail");
+    var app = new Vue({
+        el:"#login-fail",
+        data:{},
+        created(){
+            if (login_fail != null && login_fail.length > 0) {
+                this.$message.error("登陆失败,请重试");
+                login_fail = null;
+            }
+        }
+    })
+</script>
 </html>
