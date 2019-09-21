@@ -2,6 +2,7 @@ D:\WorkSpace\itcast_health\health_parent\health_service_provider\src\main\java\c
 D:\WorkSpace\itcast_health\health_parent\health_service_provider\src\main\java\cn\itcast\dao\PermissionDao.java
 D:\WorkSpace\itcast_health\health_parent\health_service_provider\src\main\java\cn\itcast\dao\UserDao.java
 D:\WorkSpace\itcast_health\health_parent\health_service_provider\src\main\java\cn\itcast\service\impl\OrderSettingServiceImpl.java
+D:\WorkSpace\itcast_health\health_parent\health_service_provider\src\main\java\cn\itcast\service\impl\ReportServiceImpl.java
 D:\WorkSpace\itcast_health\health_parent\health_service_provider\src\main\java\cn\itcast\dao\MemberDao.java
 D:\WorkSpace\itcast_health\health_parent\health_service_provider\src\main\java\cn\itcast\dao\CheckItemDao.java
 D:\WorkSpace\itcast_health\health_parent\health_service_provider\src\main\java\cn\itcast\service\impl\SetMealServiceImpl.java

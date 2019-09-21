@@ -82,7 +82,7 @@
             <security:password-encoder ref="passwordEncoder" />
         </security:authentication-provider>
     </security:authentication-manager>
-
+    <bean id="springSecurityUserService" class="cn.itcast.security.SpringSecurityUserService"/>
     <!--开启注解方式权限控制-->
     <security:global-method-security pre-post-annotations="enabled" />
 </beans>
