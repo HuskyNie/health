@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface SetMealDao {
@@ -47,4 +48,8 @@ public interface SetMealDao {
             )
     })
     Setmeal findById(Integer id);
+
+    //后台套餐预约占比统计方法
+    @Select("select s.name , count(s.id) value from t_setmeal s ,t_order o where s.id = o.setmeal_id group by s.id")
+    List<Map<String, Object>> findSetMealCount();
 }

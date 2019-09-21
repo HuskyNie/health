@@ -13,6 +13,35 @@
     <el-container>
         <el-header>
             Header
+            <h3>基础的、简洁的标签页</h3>
+            <!--
+                通过value属性来指定当前选中的标签页
+            -->
+            <el-tabs value="first">
+                <el-tab-pane label="用户管理" name="first">用户管理</el-tab-pane>
+                <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
+                <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
+                <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
+            </el-tabs>
+            <h3>选项卡样式的标签页</h3>
+            <el-tabs value="first" type="card">
+                <el-tab-pane label="用户管理" name="first">用户管理</el-tab-pane>
+                <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
+                <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
+                <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
+            </el-tabs>
+            <h3>卡片化的标签页</h3>
+            <el-tabs value="first" type="border-card">
+                <el-tab-pane label="用户管理" name="first">用户管理</el-tab-pane>
+                <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
+                <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
+                <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
+            </el-tabs>
+            <script>
+                new Vue({
+                    el: '#app'
+                })
+            </script>
             <!-- <el-menu>
                     <el-submenu index="1">
                         <template slot="title">
@@ -47,7 +76,8 @@
         </el-aside>
         <el-container>
             <el-main>Main
-                    <el-button :plain="true" @click="open1">消息</el-button>
+
+                    <!--<el-button :plain="true" @click="open1">消息</el-button>
                     <el-button :plain="true" @click="open2">成功</el-button>
                     <el-button :plain="true" @click="open3">警告</el-button>
                     <el-button :plain="true" @click="open4">错误</el-button>
@@ -75,7 +105,7 @@
                           }
                         }
                       })
-                    </script>
+                    </script>-->
                     <!-- <el-table :data="tableData" stripe>
                             <el-table-column prop="date" label="日期"></el-table-column>
                             <el-table-column prop="name" label="姓名"></el-table-column>

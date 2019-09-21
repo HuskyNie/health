@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service(interfaceClass = SetMealService.class)
 @Transactional
@@ -50,5 +51,10 @@ public class SetMealServiceImpl implements SetMealService {
                 setMealDao.setSetMeanAndCheckGroup(map);
             }
         }
+    }
+
+    //后台套餐预约占比统计方法
+    public List<Map<String, Object>> findSetMealCount() {
+        return setMealDao.findSetMealCount();
     }
 }
