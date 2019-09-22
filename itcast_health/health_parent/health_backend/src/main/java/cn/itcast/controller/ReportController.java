@@ -9,6 +9,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,6 +33,8 @@ public class ReportController {
     @Reference
     private ReportService reportService;
 
+    //会员报表查询
+    @PreAuthorize("hasAuthority('REPORT_VIEW')")
     @RequestMapping("/getMemberReport")
     public Result getMemberReport(){
         Calendar calendar = Calendar.getInstance();
@@ -52,7 +55,9 @@ public class ReportController {
         return new Result(true , MessageConstant.GET_MEMBER_NUMBER_REPORT_SUCCESS , map);
     }
 
+    //套餐报表查询
     @RequestMapping("/getSetMealReport")
+    @PreAuthorize("hasAuthority('REPORT_VIEW')")
     public Result getSetMealReport(){
         try {
             Map<String , Object> data = new HashMap<>();
@@ -71,6 +76,8 @@ public class ReportController {
         }
     }
 
+    //工作量报表查询
+    @PreAuthorize("hasAuthority('REPORT_VIEW')")
     @RequestMapping("/getBusinessReportData")
     public Result getBusinessReportData(){
         try {
@@ -82,6 +89,8 @@ public class ReportController {
         }
     }
 
+    //导出工作量报表
+    @PreAuthorize("hasAuthority('REPORT_VIEW')")
     @RequestMapping("/exportBusinessReport")
     public Result exportBusinessReport(HttpServletRequest request , HttpServletResponse response){
         try {

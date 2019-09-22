@@ -4,8 +4,6 @@ import cn.itcast.pojo.Setmeal;
 import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +16,7 @@ public interface SetMealDao {
 
     //设置套餐与检查组关联关系
     @Insert("insert into t_setmeal_checkgroup (setmeal_id,checkgroup_id) values (#{setmeal_id},#{checkgroup_id})")
-    void setSetMeanAndCheckGroup(HashMap<String, Integer> map);
+    void setSetMealAndCheckGroup(Map<String, Integer> map);
 
     //设置分页查询方法
     Page<Setmeal> selectByCondition(String queryString);
@@ -52,4 +50,19 @@ public interface SetMealDao {
     //后台套餐预约占比统计方法
     @Select("select s.name , count(s.id) value from t_setmeal s ,t_order o where s.id = o.setmeal_id group by s.id")
     List<Map<String, Object>> findSetMealCount();
+
+    //清除中间关系表
+    @Delete("delete from t_setmeal_checkgroup where setmeal_id = #{id}")
+    void deleteAssociation(Integer id);
+
+    //根据id删除套餐基本信息
+    @Delete("delete from t_setmeal where id = #{id}")
+    void deleteById(Integer id);
+
+    //根据套餐id查询关联检查组
+    @Select("select checkgroup_id from t_setmeal_checkgroup where setmeal_id = #{id}")
+    List<Integer> findCheckGroupIdsBySetMealId(Integer id);
+
+    //根据id更新套餐基本信息方法
+    void update(Setmeal setmeal);
 }

@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+
+    //用户权限管理
     @RequestMapping("/getUsername")
     public Result getUsername(){
         try {

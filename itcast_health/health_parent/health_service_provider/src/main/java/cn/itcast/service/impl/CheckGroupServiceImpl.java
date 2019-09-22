@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service(interfaceClass = CheckGroupService.class)
 @Transactional
@@ -55,14 +56,14 @@ public class CheckGroupServiceImpl implements CheckGroupService {
     public void update(CheckGroup checkGroup, Integer[] checkItemIds) {
         //更新基本信息
         checkGroupDao.updateCheckGroup(checkGroup);
+        //清空中间表关联关系
+        checkGroupDao.deleteAssociation(checkGroup.getId());
         //更新中间表关联关系
         if (checkItemIds != null && checkItemIds.length > 0){
-            //清空中间表关联关系
-            checkGroupDao.deleteAssociation(checkGroup.getId());
             //重新设置中间表关联关系
             for (Integer checkItemId : checkItemIds) {
                 //为了方便dao层获取多个数据,封装为map传递
-                HashMap<String, Integer> map = new HashMap<>();
+                Map<String, Integer> map = new HashMap<>();
                 map.put("checkgroup_id" , checkGroup.getId());
                 map.put("checkitem_id" , checkItemId);
                 checkGroupDao.setCheckGroupAssociationWithCheckItem(map);

@@ -4,8 +4,8 @@ import cn.itcast.pojo.CheckGroup;
 import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.*;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface CheckGroupDao {
@@ -16,7 +16,7 @@ public interface CheckGroupDao {
 
     //设置检查项与检查组关联关系
     @Insert("insert into t_checkgroup_checkitem (checkgroup_id , checkitem_id) values (#{checkgroup_id} , #{checkitem_id})")
-    void setCheckGroupAssociationWithCheckItem(HashMap<String, Integer> map);
+    void setCheckGroupAssociationWithCheckItem(Map<String, Integer> map);
 
     //分页查询方法
     Page<CheckGroup> selectByCondition(String queryString);

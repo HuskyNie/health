@@ -6,6 +6,7 @@ import cn.itcast.pojo.OrderSetting;
 import cn.itcast.service.OrderSettingService;
 import cn.itcast.utils.POIUtils;
 import com.alibaba.dubbo.config.annotation.Reference;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,6 +27,7 @@ public class OrderSettingController {
     private OrderSettingService orderSettingService;
 
     //文件上传,实现预约设置数据批量导入
+    @PreAuthorize("hasAuthority('ORDERSETTING')")
     @RequestMapping("/upload")
     public Result upload(@RequestParam("excelFile") MultipartFile excelFile){
         try {
@@ -46,6 +48,7 @@ public class OrderSettingController {
     }
 
     //获取当前月预约信息
+    @PreAuthorize("hasAuthority('ORDERSETTING_QUERY')")
     @RequestMapping("/getOrderSettingByMonth")
     public Result getOrderSettingByMonth(String date) {
         try {
@@ -58,6 +61,7 @@ public class OrderSettingController {
     }
 
     //根据日期修改可预约人数
+    @PreAuthorize("hasAuthority('ORDERSETTING')")
     @RequestMapping("/editNumberByDate")
     public Result editNumberByDate(@RequestBody OrderSetting orderSetting) {
         try {

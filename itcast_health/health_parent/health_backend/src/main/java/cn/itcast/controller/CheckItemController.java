@@ -65,6 +65,7 @@ public class CheckItemController {
     }
 
     //检查项编辑功能数据回显方法
+    @PreAuthorize("hasAuthority('CHECKITEM_QUERY')")
     @RequestMapping("/findById")
     public Result findById(Integer id){
         try {
@@ -95,6 +96,7 @@ public class CheckItemController {
     }
 
     //检查组新建编辑窗口数据回显查询所有方法
+    @PreAuthorize("hasAuthority('CHECKITEM_QUERY')")
     @RequestMapping("/findAll")
     public Result findAll(){
         try {

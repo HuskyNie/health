@@ -16,4 +16,10 @@ public interface SetMealService {
     Setmeal findById(Integer id);
 
     List<Map<String, Object>> findSetMealCount();
+
+    void delete(Integer id);
+
+    List<Integer> findCheckGroupIdsBySetMealId(Integer id);
+
+    void update(Setmeal setmeal, Integer[] checkGroupIds);
 }
