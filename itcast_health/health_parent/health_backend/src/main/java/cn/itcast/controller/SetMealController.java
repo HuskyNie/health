@@ -119,6 +119,7 @@ public class SetMealController {
     }
 
     //编辑数据提交方法
+    //Todo:将图片名称设置为uuid随机码,储存到Redis中,并将原图片从Redis中删除
     @PreAuthorize("hasAuthority('SETMEAL_EDIT')")
     @RequestMapping("/update")
     public Result update(@RequestBody Setmeal setmeal , Integer[] checkGroupIds) {

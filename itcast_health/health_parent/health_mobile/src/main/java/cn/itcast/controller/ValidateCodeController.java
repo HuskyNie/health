@@ -22,7 +22,7 @@ public class ValidateCodeController {
         Integer validateCode = ValidateCodeUtils.generateValidateCode(4); //生成4位验证码
         try {
             //发送短信
-//            SMSUtils.sendShortMessage(SMSUtils.VALIDATE_CODE , telephone , validateCode.toString());
+            SMSUtils.sendShortMessage(SMSUtils.VALIDATE_CODE , telephone , validateCode.toString());
         } catch (Exception e) {
             e.printStackTrace();
             //验证码发送失败
@@ -39,7 +39,7 @@ public class ValidateCodeController {
         Integer validateCode = ValidateCodeUtils.generateValidateCode(6); //生成6位验证码
         try {
             //发送短信
-//            SMSUtils.sendShortMessage(SMSUtils.VALIDATE_CODE , telephone , validateCode.toString());
+            SMSUtils.sendShortMessage(SMSUtils.VALIDATE_CODE , telephone , validateCode.toString());
         } catch (Exception e) {
             e.printStackTrace();
             //验证码发送失败

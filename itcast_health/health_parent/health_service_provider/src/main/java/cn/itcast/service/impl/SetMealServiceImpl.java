@@ -90,5 +90,8 @@ public class SetMealServiceImpl implements SetMealService {
                 setMealDao.setSetMealAndCheckGroup(map);
             }
         }
+        //将图片名称保存到Redis,此处不会删除云储存中原有的图片,待完善
+        //Todo:完成更新时删除云储存中原有图片
+        jedisPool.getResource().sadd(RedisConstant.SETMEAL_PIC_DB_RESOURCES,setmeal.getImg());
     }
 }

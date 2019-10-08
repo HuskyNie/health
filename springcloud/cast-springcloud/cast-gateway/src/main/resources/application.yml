@@ -1,0 +1,42 @@
+server:
+  port: 10010
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        # 路由id，可以随意写
+        - id: user-service-route
+        # 代理的服务地址；lb表示从eureka中获取具体服务
+          uri: lb://user-service
+          # 路由断言，可以配置映射路径
+          predicates:
+            - Path=/**
+          filters:
+         # 添加请求路径的前缀
+#            - PrefixPath=/user
+            # 表示过滤1个路径.2表示两个路径,以此类推
+            - StripPrefix=1
+      default-filters:
+        #  响应头过滤器，对输出的响应设置其头部属性名称为X-Response-Default-MyName，值为itcast； 如果有多个参数多则重写一行设置不同的参数
+        - AddResponseHeader=X-Response-Default-MyName, itcast
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+  instance:
+    prefer-ip-address: true
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 6000
+ribbon:
+  ConnectTimeout: 1000
+  ReadTimeout: 2000
+  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 0
